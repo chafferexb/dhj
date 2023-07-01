@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.stellarmemo.dao.NoteDao">
+
+    <insert id="createNote">
+        insert into note(user_id,content,noteid)
+        values (#{user_id},#{content},#{noteid})
+    </insert>
+
+    <update id="modifyNote" >
+        update note set
+        content=#{content}
+        where noteid=#{noteid}
+    </update>
+
+
+    <delete id="deleteNote" >
+        delete from note where noteid=#{noteid}
+    </delete>
+
+    <select id="searchByKey" resultType="com.example.stellarmemo.pojo.Note">
+        select * from note
+        where content like #{key}
+        limit #{startIndex},#{pageSize}
+
+    </select>
+
+    <select id="searchByTag" resultType="com.example.stellarmemo.pojo.Note">
+        select note.* from note,tag_note
+        where note.noteid=tag_note.note_id and #{tag_id}=tag_note.tag_id
+    </select>
+
+
+</mapper>
